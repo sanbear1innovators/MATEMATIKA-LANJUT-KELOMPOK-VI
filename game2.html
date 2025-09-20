@@ -2,26 +2,41 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Trigonometri Arrange Game 🎮</title>
+  <title>📐 Trigonometri Arrange Game 🎮</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #232526, #414345);
-      color: white;
-      text-align: center;
+      margin: 0;
       padding: 30px;
+      text-align: center;
+      color: #fff;
+      /* Jungle animated gradient */
+      background: linear-gradient(270deg, #0f2027, #2c5364, #1c3d23, #183d2b);
+      background-size: 800% 800%;
+      animation: jungleFlow 25s ease infinite;
+      min-height: 100vh;
     }
+
+    @keyframes jungleFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(90deg, #00c6ff, #ffffff);
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #00ffcc, #00ff99, #66ff99);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 25px;
+      text-shadow: 0 0 15px rgba(0,255,150,0.5);
     }
+
     .question {
       font-size: 1.2rem;
       margin-bottom: 20px;
     }
+
     .pool, .answer {
       display: flex;
       flex-wrap: wrap;
@@ -29,42 +44,71 @@
       justify-content: center;
       min-height: 60px;
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
+
     .pool {
       background: rgba(255,255,255,0.08);
     }
     .answer {
-      background: rgba(0,198,255,0.08);
+      background: rgba(0,198,100,0.15);
       margin-top: 15px;
     }
+
     .tile {
       background: rgba(255,255,255,0.15);
       padding: 10px 15px;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: 0.3s;
       font-weight: 600;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
     }
     .tile:hover {
-      background: rgba(0,198,255,0.4);
+      background: rgba(0,255,150,0.4);
+      transform: scale(1.1);
     }
+
     button {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 12px 22px;
       border: none;
-      border-radius: 8px;
-      background: #00c6ff;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00ff99, #00cc66);
       color: black;
       font-weight: 700;
       cursor: pointer;
       transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     button:hover {
-      background: #00a2d3;
+      background: linear-gradient(90deg, #00e68a, #00994d);
+      transform: translateY(-2px);
     }
-    .correct { background: rgba(0,255,100,0.5) !important; }
-    .wrong { background: rgba(255,0,0,0.5) !important; }
+
+    .correct { background: rgba(0,255,100,0.6) !important; }
+    .wrong { background: rgba(255,50,50,0.6) !important; }
+
+    /* Daun jatuh */
+    .leaf {
+      position: fixed;
+      top: -50px;
+      width: 20px;
+      height: 20px;
+      background: rgba(0,255,100,0.6);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+                         79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+                         2% 35%, 39% 35%);
+      animation: fall linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -144,6 +188,17 @@
         }, 800);
       }
     }
+
+    // Generate daun jatuh
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.style.left = Math.random() * window.innerWidth + "px";
+      leaf.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(leaf);
+      setTimeout(() => { leaf.remove(); }, 10000);
+    }
+    setInterval(createLeaf, 700);
 
     startQuestion();
   </script>
