@@ -160,12 +160,28 @@ seperti permainan atau gambar yang bisa dijelajahi untuk memperkuat pemahaman ko
         
         </div>
       </div></section>
-<!-- About Section (Trigonometry-Themed + Video) -->
-<iframe width="560" height="315" src="https://www.youtube.com/embed/HDfZI95ZL30?si=Tfj4H0L8rT9QPXFS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
+<!-- About Section (Trigonometry-Themed + YouTube Video) -->
+<section id="about" class="about section" style="position: relative; overflow: hidden; height: 600px; background: #1c1c1c; display: flex; align-items: center; justify-content: center;">
+  
+  <!-- Canvas background -->
+  <canvas id="trigCanvas" style="position:absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+  
+  <!-- Video container -->
+  <div style="position: relative; z-index: 2; width: 80%; max-width: 900px; aspect-ratio: 16/9; border-radius: 15px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+    <iframe 
+      src="https://www.youtube.com/embed/HDfZI95ZL30?autoplay=1&mute=1&loop=1&playlist=HDfZI95ZL30&controls=1&rel=0&modestbranding=1" 
+      title="YouTube video player" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      allowfullscreen
+      style="width:100%; height:100%;">
+    </iframe>
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.2); pointer-events:none;"></div>
+  </div>
+</section>
 
 <script>
+// ---------- Canvas Animation ----------
 const canvas = document.getElementById('trigCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -176,7 +192,6 @@ function resizeCanvas() {
 window.addEventListener('resize', resizeCanvas);
 resizeCanvas();
 
-// Generate random math symbols for floating effect
 const symbols = ['sin', 'cos', 'tan', 'θ', 'π', '√', '∑'];
 let floatingSymbols = Array.from({length:20}, () => ({
   x: Math.random() * canvas.width,
@@ -188,10 +203,9 @@ let floatingSymbols = Array.from({length:20}, () => ({
 
 function draw() {
   ctx.clearRect(0,0,canvas.width,canvas.height);
-
   const time = Date.now() * 0.002;
 
-  // Draw sine/cosine waves
+  // Draw sine waves
   for(let i=0;i<3;i++){
     ctx.beginPath();
     for(let x=0;x<canvas.width;x++){
@@ -205,18 +219,21 @@ function draw() {
 
   // Draw floating symbols
   floatingSymbols.forEach(sym => {
-    ctx.fillStyle = `rgba(255,255,255,0.2)`;
+    ctx.fillStyle = `rgba(255,255,255,0.25)`;
     ctx.font = `${sym.fontSize}px Poppins, sans-serif`;
     ctx.fillText(sym.char, sym.x, sym.y);
     sym.y -= sym.speed;
-    if(sym.y < -20) sym.y = canvas.height + 20;
+    if(sym.y < -20) {
+      sym.y = canvas.height + 20;
+      sym.x = Math.random() * canvas.width;
+    }
   });
 
   requestAnimationFrame(draw);
 }
-
 draw();
 </script>
+
 <!-- Fakta Menarik Trigonometri -->
 <section id="trig-fakta" class="departments section" style="background: linear-gradient(145deg, #95a9bb, #3d5670); padding: 80px 0; position: relative; overflow: hidden;">
 
